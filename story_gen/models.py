@@ -7,4 +7,3 @@ class AssetUpload(models.Model):
     story_text = models.TextField(blank=True, null=True)
     story_audio = models.FileField(
         upload_to='audio_files', blank=True, null=True)
-

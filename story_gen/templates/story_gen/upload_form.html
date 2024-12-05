@@ -1,0 +1,11 @@
+
+{% block content %}
+    <div class="upload-image">
+        <h1 class="title">Upload your image</h1>
+        <form class="upload-image-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Upload Image</button>
+        </form>
+        </div>
+{% endblock content %}

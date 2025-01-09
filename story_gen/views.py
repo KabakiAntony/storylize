@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import ImageUploadForm
-from .models import AssetUpload
+from .tasks import process_image
 
 
 def upload_image(request):
@@ -9,18 +9,10 @@ def upload_image(request):
         if form.is_valid():
             form.save()
             img_obj = form.instance
-            # generate_caption(img_obj.uploaded_image.url)
+            image_name = img_obj.uploaded_image.name
+            process_image(image_name)
             return render(
                 request, 'story_gen/result.html', {"img_obj": img_obj})
     else:
         form = ImageUploadForm()
     return render(request, 'story_gen/upload_form.html', {"form": form})
-
-
-def generate_caption(url):
-    """
-    this is going to be a celery task calling the 
-    inference api to generate a caption for the 
-    uploaded image
-    """
-    pass
